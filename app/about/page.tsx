@@ -1,4 +1,5 @@
 import React from 'react'
+import { BackToHome } from '@/components/back-to-home'
 
 export const metadata = {
   title: 'About Us | TastePalette',
@@ -8,6 +9,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
+      <BackToHome/>
       <div className="text-center">
         <h1 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           About Taste<span className="text-primary">Palette</span>

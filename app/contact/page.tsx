@@ -1,10 +1,12 @@
 'use client'
 
 import React from 'react'
+import { BackToHome } from '@/components/back-to-home'
 
 export default function ContactPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
+      <BackToHome/>
       <div className="text-center">
         <h1 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           Get in Touch
