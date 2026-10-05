@@ -11,7 +11,12 @@ const socials = [
 
 const links = {
   Explore: categories.map((c) => ({ label: c.label, href: `/?category=${c.value}#recipes` })),
-  Company: ['About', 'Contact', 'Write for us', 'Privacy'].map((label) => ({ label, href: '#' })),
+  Company: [
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Write for us', href: '/write-for-us' },
+    { label: 'Privacy', href: '/privacy' },
+  ],
 }
 
 export function SiteFooter() {
