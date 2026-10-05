@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { categories } from '@/lib/recipes'
 import { NewsletterForm } from './newsletter-form'
 
@@ -76,10 +77,11 @@ export function SiteFooter() {
               <h3 className="text-sm font-semibold text-foreground">{title}</h3>
               <ul className="mt-4 flex flex-col gap-2.5">
                 {items.map((item) => (
-                    <li key={item.label}>
-                      <a href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
-                        {item.label}
-                    </a>
+                  <li key={item.label}>
+                    {/* 👈 2. استبدلنا <a> بـ <Link> هنا */}
+                    <Link href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
