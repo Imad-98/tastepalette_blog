@@ -1,9 +1,6 @@
-import React from 'react'
+'use client'
 
-export const metadata = {
-  title: 'Contact Us | TastePalette',
-  description: 'Get in touch with the TastePalette team for questions, feedback, or collaborations.',
-}
+import React from 'react'
 
 export default function ContactPage() {
   return (
