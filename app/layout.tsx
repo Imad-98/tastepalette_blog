@@ -14,27 +14,37 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
 })
 
+const siteUrl = 'https://tastepalette-blog.vercel.app/'
+
 export const metadata: Metadata = {
-  title: 'TastePalette — Recipes from around the world',
-  description:
-    'Discover sweet, salty, drinks, mains and salads from Morocco, France, Italy, Korea, Japan and beyond. A fresh recipe every day.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'TastePalette - Delicious World Recipes & Culinary Inspiration',
+    template: '%s | TastePalette',
+  },
+  description: 'Explore easy-to-follow, delicious recipes from around the world. Hand-picked dishes, cooking guides, and weekly culinary tips on TastePalette.',
+  keywords: ['recipes', 'cooking tips', 'food blog', 'easy recipes', 'TastePalette', 'dinner ideas'],
+  authors: [{ name: 'TastePalette Team' }],
+  creator: 'TastePalette',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteUrl,
+    title: 'TastePalette - Delicious World Recipes',
+    description: 'Explore easy-to-follow, delicious recipes from around the world.',
+    siteName: 'TastePalette',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'TastePalette - Delicious World Recipes',
+    description: 'Explore easy-to-follow, delicious recipes from around the world.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  verification: {
+    google: 'gmkNKvBhJQlvYCunIwRtuE5XlinZs8ec44hYJwNjbnQ',
   },
 }
 
