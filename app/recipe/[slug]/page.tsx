@@ -78,6 +78,8 @@ export default async function RecipePage({ params }: { params: Params }) {
           (Number((recipe as any).cookTime || (recipe as any).cookMinutes) || 0))
     ),
     recipeYield: recipe.servings ? `${recipe.servings} servings` : undefined,
+    recipeCategory: 'Main Course',
+    recipeCuisine: country?.name || 'International',
     author: {
       '@type': 'Organization',
       name: 'TastePalette',
@@ -87,11 +89,22 @@ export default async function RecipePage({ params }: { params: Params }) {
         ? ing
         : [ing.amount, ing.unit, ing.name || ing.ingredient].filter(Boolean).join(' ') || String(ing)
     ),
-    recipeInstructions: (recipe.instructions ?? []).map((step: any, index: number) => ({
-      '@type': 'HowToStep',
-      text: typeof step === 'string' ? step : step.text ?? step.instruction ?? String(step),
-      position: index + 1,
-    })),
+    recipeInstructions: (recipe.instructions ?? []).map((step: any, index: number) => {
+      // استخراج النص من الخطوة سواء كانت نصاً أو كائناً (Object) من Sanity
+      let stepText = ''
+      if (typeof step === 'string') {
+        stepText = step
+      } else if (typeof step === 'object' && step !== null) {
+        stepText = step.text || step.instruction || step.step || step.title || ''
+      }
+
+      return {
+        '@type': 'HowToStep',
+        name: `Step ${index + 1}`,
+        text: stepText || `Instruction step ${index + 1}`,
+        position: index + 1,
+      }
+    }),
   }
 
   return (
