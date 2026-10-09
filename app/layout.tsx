@@ -22,9 +22,11 @@ export const metadata: Metadata = {
     default: 'TastePalette - Delicious World Recipes & Culinary Inspiration',
     template: '%s | TastePalette',
   },
-  description: 'Explore easy-to-follow, delicious recipes from around the world. Hand-picked dishes, cooking guides, and weekly culinary tips on TastePalette.',
+  description:
+    'Explore easy-to-follow, delicious recipes from around the world. Hand-picked dishes, cooking guides, and weekly culinary tips on TastePalette.',
+  applicationName: 'TastePalette',   
   icons: {
-    icon: '/icon.png', 
+    icon: '/icon.png',
     apple: '/apple-icon.png',
   },
   keywords: ['recipes', 'cooking tips', 'food blog', 'easy recipes', 'TastePalette', 'dinner ideas'],
@@ -65,12 +67,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'TastePalette',
+    alternateName: ['Taste Palette', 'TastePalette Blog'],
+    url: 'https://tastepalette-blog.vercel.app',
+  }
+
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={`${jakarta.variable} ${fraunces.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"
