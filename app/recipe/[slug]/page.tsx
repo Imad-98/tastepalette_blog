@@ -15,6 +15,13 @@ type Params = Promise<{ slug: string }>
 
 export const revalidate = 60
 
+function formatIsoDuration(minutes?: number | string): string | undefined {
+  if (!minutes) return undefined
+  const mins = typeof minutes === 'string' ? parseInt(minutes, 10) : minutes
+  if (isNaN(mins) || mins <= 0) return undefined
+  return `PT${mins}M`
+}
+
 export async function generateStaticParams() {
   const slugs = await getRecipeSlugs()
   return slugs.map((slug) => ({ slug }))
@@ -24,13 +31,23 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { slug } = await params
   const recipe = await getRecipeBySlug(slug)
   if (!recipe) return { title: 'Recipe not found | TastePalette' }
+
+  const imageUrl = recipe.image?.asset ? recipeImageUrl(recipe.image, 1200, 630) : undefined
+
   return {
     title: `${recipe.title} | TastePalette`,
     description: recipe.summary ?? undefined,
     openGraph: {
-      title: recipe.title,
+      title: `${recipe.title} | TastePalette`,
       description: recipe.summary ?? undefined,
-      images: recipe.image?.asset ? [recipeImageUrl(recipe.image, 1200, 630)] : undefined,
+      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630, alt: recipe.title }] : undefined,
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${recipe.title} | TastePalette`,
+      description: recipe.summary ?? undefined,
+      images: imageUrl ? [imageUrl] : undefined,
     },
   }
 }
@@ -44,8 +61,46 @@ export default async function RecipePage({ params }: { params: Params }) {
   const ingredients = recipe.ingredients ?? []
   const country = countryFor(recipe.country)
 
+  const imageUrl = recipe.image?.asset ? recipeImageUrl(recipe.image, 1200, 630) : undefined
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: recipe.title,
+    image: imageUrl ? [imageUrl] : [],
+    description: recipe.summary ?? undefined,
+    prepTime: formatIsoDuration((recipe as any).prepTime ?? (recipe as any).prepMinutes),
+    cookTime: formatIsoDuration((recipe as any).cookTime ?? (recipe as any).cookMinutes),
+    totalTime: formatIsoDuration(
+      (recipe as any).totalTime ??
+        (recipe as any).totalMinutes ??
+        ((Number((recipe as any).prepTime || (recipe as any).prepMinutes) || 0) +
+          (Number((recipe as any).cookTime || (recipe as any).cookMinutes) || 0))
+    ),
+    recipeYield: recipe.servings ? `${recipe.servings} servings` : undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'TastePalette',
+    },
+    recipeIngredient: ingredients.map((ing: any) =>
+      typeof ing === 'string'
+        ? ing
+        : [ing.amount, ing.unit, ing.name || ing.ingredient].filter(Boolean).join(' ') || String(ing)
+    ),
+    recipeInstructions: (recipe.instructions ?? []).map((step: any, index: number) => ({
+      '@type': 'HowToStep',
+      text: typeof step === 'string' ? step : step.text ?? step.instruction ?? String(step),
+      position: index + 1,
+    })),
+  }
+
   return (
     <FiltersProvider liveSearch={false}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <SiteHeader />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         <RecipeHeader recipe={recipe} />
