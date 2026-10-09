@@ -15,6 +15,23 @@ type Params = Promise<{ slug: string }>
 
 export const revalidate = 60
 
+function extractText(val: any): string {
+  if (!val) return ''
+  if (typeof val === 'string') return val.trim()
+  if (typeof val === 'number') return String(val)
+  if (Array.isArray(val)) {
+    return val.map(extractText).filter(Boolean).join(' ')
+  }
+  if (typeof val === 'object') {
+    return Object.entries(val)
+      .filter(([key]) => !key.startsWith('_'))  
+      .map(([_, v]) => extractText(v))
+      .filter(Boolean)
+      .join(' ')
+  }
+  return ''
+}
+
 function formatIsoDuration(minutes?: number | string): string | undefined {
   if (!minutes) return undefined
   const mins = typeof minutes === 'string' ? parseInt(minutes, 10) : minutes
@@ -90,18 +107,12 @@ export default async function RecipePage({ params }: { params: Params }) {
         : [ing.amount, ing.unit, ing.name || ing.ingredient].filter(Boolean).join(' ') || String(ing)
     ),
     recipeInstructions: (recipe.instructions ?? []).map((step: any, index: number) => {
-      // استخراج النص من الخطوة سواء كانت نصاً أو كائناً (Object) من Sanity
-      let stepText = ''
-      if (typeof step === 'string') {
-        stepText = step
-      } else if (typeof step === 'object' && step !== null) {
-        stepText = step.text || step.instruction || step.step || step.title || ''
-      }
+      const rawText = extractText(step)
 
       return {
         '@type': 'HowToStep',
         name: `Step ${index + 1}`,
-        text: stepText || `Instruction step ${index + 1}`,
+        text: rawText || `Step ${index + 1}`,
         position: index + 1,
       }
     }),
