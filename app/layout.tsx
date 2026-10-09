@@ -23,6 +23,10 @@ export const metadata: Metadata = {
     template: '%s | TastePalette',
   },
   description: 'Explore easy-to-follow, delicious recipes from around the world. Hand-picked dishes, cooking guides, and weekly culinary tips on TastePalette.',
+  icons: {
+    icon: '/icon.png', 
+    apple: '/apple-icon.png',
+  },
   keywords: ['recipes', 'cooking tips', 'food blog', 'easy recipes', 'TastePalette', 'dinner ideas'],
   authors: [{ name: 'TastePalette Team' }],
   creator: 'TastePalette',
