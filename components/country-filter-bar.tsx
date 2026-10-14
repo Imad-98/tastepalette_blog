@@ -13,7 +13,6 @@ export function CountryFilterBar() {
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
 
-  // دالة التمرير التلقائي إلى قسم الوصفات تحت البانر
   const scrollToRecipes = () => {
     const recipesSection = document.getElementById('recipes')
     if (recipesSection) {
@@ -23,7 +22,7 @@ export function CountryFilterBar() {
 
   const handleCountrySelect = (code: string | null) => {
     setCountry(code as any)
-    scrollToRecipes() // الهبوط التلقائي عند اختيار دولة
+    scrollToRecipes()
   }
 
   const checkForScroll = () => {
