@@ -40,6 +40,13 @@ function SearchField({ className }: { className?: string }) {
 export function SiteHeader() {
   const { category, setCategory } = useFilters()
 
+  const scrollToRecipes = () => {
+    const recipesSection = document.getElementById('recipes')
+    if (recipesSection) {
+      recipesSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
@@ -69,7 +76,13 @@ export function SiteHeader() {
       <nav aria-label="Recipe categories" className="mx-auto max-w-7xl px-4 pb-3 sm:px-6 lg:px-8">
         <ul className="no-scrollbar flex items-center gap-1 overflow-x-auto">
           <li>
-            <CategoryLink active={category === null} onClick={() => setCategory(null)}>
+            <CategoryLink
+              active={category === null}
+              onClick={() => {
+                setCategory(null)
+                scrollToRecipes()
+              }}
+            >
               All
             </CategoryLink>
           </li>
@@ -77,7 +90,10 @@ export function SiteHeader() {
             <li key={c.value}>
               <CategoryLink
                 active={category === c.value}
-                onClick={() => setCategory(category === c.value ? null : c.value)}
+                onClick={() => {
+                  setCategory(category === c.value ? null : c.value)
+                  scrollToRecipes()
+                }}
               >
                 {c.label}
               </CategoryLink>
