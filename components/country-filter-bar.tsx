@@ -13,7 +13,19 @@ export function CountryFilterBar() {
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
 
-  // التحقق من حالة التمرير لإظهار أو إخفاء الأسهم
+  // دالة التمرير التلقائي إلى قسم الوصفات تحت البانر
+  const scrollToRecipes = () => {
+    const recipesSection = document.getElementById('recipes')
+    if (recipesSection) {
+      recipesSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  const handleCountrySelect = (code: string | null) => {
+    setCountry(code as any)
+    scrollToRecipes() // الهبوط التلقائي عند اختيار دولة
+  }
+
   const checkForScroll = () => {
     if (!scrollContainerRef.current) return
     const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
@@ -38,7 +50,6 @@ export function CountryFilterBar() {
     }
   }, [])
 
-  // دالة التمرير عند الضغط على الأسهم
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return
     const scrollAmount = 300
@@ -51,7 +62,6 @@ export function CountryFilterBar() {
   return (
     <section aria-label="Filter by country" className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
       <div className="group relative items-center">
-        {/* سهم التمرير لليسار */}
         {showLeftArrow && (
           <button
             type="button"
@@ -63,7 +73,6 @@ export function CountryFilterBar() {
           </button>
         )}
 
-        {/* حاوية الدول */}
         <div
           ref={scrollContainerRef}
           className="no-scrollbar flex snap-x items-center gap-2 overflow-x-auto pb-1 scroll-smooth"
@@ -72,7 +81,7 @@ export function CountryFilterBar() {
         >
           <button
             type="button"
-            onClick={() => setCountry(null)}
+            onClick={() => handleCountrySelect(null)}
             aria-pressed={country === null}
             className={cn(
               'flex shrink-0 snap-start items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50',
@@ -91,7 +100,7 @@ export function CountryFilterBar() {
               <button
                 key={c.code}
                 type="button"
-                onClick={() => setCountry(active ? null : c.code)}
+                onClick={() => handleCountrySelect(active ? null : c.code)}
                 aria-pressed={active}
                 className={cn(
                   'flex shrink-0 snap-start items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50',
@@ -109,7 +118,6 @@ export function CountryFilterBar() {
           })}
         </div>
 
-        {/* سهم التمرير لليمين */}
         {showRightArrow && (
           <button
             type="button"
@@ -121,7 +129,6 @@ export function CountryFilterBar() {
           </button>
         )}
 
-        {/* التدرج الجانبي الناعم */}
         <div
           className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background to-transparent"
           aria-hidden="true"
