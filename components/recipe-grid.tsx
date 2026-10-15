@@ -34,7 +34,7 @@ export function RecipeGrid({ recipes }: { recipes: RecipeSummary[] }) {
         <p className="text-sm text-muted-foreground" aria-live="polite">
           {isPending
             ? 'Loading…'
-            : `${activeLabel ? `\${activeLabel} — ` : ''}${recipes.length} ${recipes.length === 1 ? 'recipe' : 'recipes'}`}
+            : `${recipes.length} ${recipes.length === 1 ? 'recipe' : 'recipes'}`}
         </p>
       </div>
 
