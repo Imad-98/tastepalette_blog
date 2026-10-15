@@ -44,7 +44,7 @@ export function SiteFooter() {
               Taste<span className="text-primary">Palette</span>
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Everyday recipes inspired by kitchens from Marrakech to Kyoto. Cook boldly, eat well.
+              Everyday recipes inspired by global kitchens. Cook boldly, eat well.
             </p>
             <ul className="mt-5 flex gap-2" aria-label="Social media">
               {socials.map((s) => (
@@ -78,7 +78,6 @@ export function SiteFooter() {
               <ul className="mt-4 flex flex-col gap-2.5">
                 {items.map((item) => (
                   <li key={item.label}>
-                    {/* 👈 2. استبدلنا <a> بـ <Link> هنا */}
                     <Link href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-primary">
                       {item.label}
                     </Link>

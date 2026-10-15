@@ -15,7 +15,7 @@ export default function AboutPage() {
           About Taste<span className="text-primary">Palette</span>
         </h1>
         <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-          Everyday recipes inspired by kitchens from Marrakech to Kyoto. Cook cheaply, eat well.
+          Everyday recipes inspired by global kitchens. Cook boldly, eat well.
         </p>
       </div>
 
@@ -23,7 +23,7 @@ export default function AboutPage() {
         <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
           <h2 className="font-display text-2xl font-semibold text-foreground">Welcome to TastePalette</h2>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-            TastePalette was born out of a simple passion: making home cooking approachable, exciting, and deeply flavorful. From traditional Moroccan tagines passed down through generations to quick weeknight fusion dishes, our platform brings world-class recipes straight to your kitchen.
+            TastePalette was born out of a simple passion: making home cooking approachable, exciting, and deeply flavorful. From time-honored family recipes passed down through generations to quick weeknight fusion dishes, our platform brings world-class recipes straight to your kitchen.
           </p>
         </div>
 
