@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { SearchX } from 'lucide-react'
 import { categoryLabel, countryFor, type RecipeSummary } from '@/lib/recipes'
 import { cn } from '@/lib/utils'
@@ -11,7 +12,15 @@ export function RecipeGrid({ recipes }: { recipes: RecipeSummary[] }) {
   const c = countryFor(country)
   const hasFilters = Boolean(query.trim() || category || country)
 
+  const [visibleCount, setVisibleCount] = useState(6)
+
+  useEffect(() => {
+    setVisibleCount(6)
+  }, [recipes])
+
   const activeLabel = [c && `${c.flag} ${c.name}`, categoryLabel(category)].filter(Boolean).join(' · ')
+
+  const displayedRecipes = recipes.slice(0, visibleCount)
 
   return (
     <section id="recipes" aria-labelledby="recipes-title" className="mx-auto max-w-7xl scroll-mt-36 px-4 py-16 sm:px-6 lg:px-8">
@@ -25,19 +34,33 @@ export function RecipeGrid({ recipes }: { recipes: RecipeSummary[] }) {
         <p className="text-sm text-muted-foreground" aria-live="polite">
           {isPending
             ? 'Loading…'
-            : `${activeLabel ? `${activeLabel} — ` : ''}${recipes.length} ${recipes.length === 1 ? 'recipe' : 'recipes'}`}
+            : `${activeLabel ? `\${activeLabel} — ` : ''}${recipes.length} ${recipes.length === 1 ? 'recipe' : 'recipes'}`}
         </p>
       </div>
 
       {recipes.length > 0 ? (
-        <div
-          aria-busy={isPending}
-          className={cn('grid gap-6 transition-opacity sm:grid-cols-2 lg:grid-cols-3', isPending && 'opacity-60')}
-        >
-          {recipes.map((r) => (
-            <RecipeCard key={r._id} recipe={r} />
-          ))}
-        </div>
+        <>
+          <div
+            aria-busy={isPending}
+            className={cn('grid gap-6 transition-opacity sm:grid-cols-2 lg:grid-cols-3', isPending && 'opacity-60')}
+          >
+            {displayedRecipes.map((r) => (
+              <RecipeCard key={r._id} recipe={r} />
+            ))}
+          </div>
+
+          {visibleCount < recipes.length && (
+            <div className="mt-12 text-center">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((prev) => prev + 6)}
+                className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground shadow-md transition-all hover:opacity-90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                Load More Recipes ({recipes.length - visibleCount} remaining)
+              </button>
+            </div>
+          )}
+        </>
       ) : (
         <div className="flex flex-col items-center gap-4 rounded-3xl border border-dashed border-border bg-card px-6 py-16 text-center">
           <span className="grid size-12 place-items-center rounded-full bg-accent text-accent-foreground">
