@@ -52,7 +52,7 @@ export function getFeaturedRecipe() {
   return sanityFetch<RecipeSummary | null>({ query: featuredRecipeQuery, fallback: null })
 }
 
-export function getRecipes({ q, category, country }: RecipeFilters, limit = 12) {
+export function getRecipes({ q, category, country }: RecipeFilters, limit = 100) {
   const term = q.trim().replace(/[*"\\]/g, '')
   return sanityFetch<RecipeSummary[]>({
     query: recipesQuery,

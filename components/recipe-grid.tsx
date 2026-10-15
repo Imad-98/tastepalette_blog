@@ -56,7 +56,7 @@ export function RecipeGrid({ recipes }: { recipes: RecipeSummary[] }) {
                 onClick={() => setVisibleCount((prev) => prev + 6)}
                 className="rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground shadow-md transition-all hover:opacity-90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
               >
-                Load More Recipes ({recipes.length - visibleCount} remaining)
+                Load More Recipes
               </button>
             </div>
           )}
