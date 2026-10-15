@@ -14,7 +14,7 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
 })
 
-const siteUrl = 'https://tastepalette-blog.vercel.app/'
+const siteUrl = 'https://tastepalette-blog.vercel.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -26,7 +26,10 @@ export const metadata: Metadata = {
     'Explore easy-to-follow, delicious recipes from around the world. Hand-picked dishes, cooking guides, and weekly culinary tips on TastePalette.',
   applicationName: 'TastePalette',   
   icons: {
-    icon: '/icon.png',
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
     apple: '/apple-icon.png',
   },
   keywords: ['recipes', 'cooking tips', 'food blog', 'easy recipes', 'TastePalette', 'dinner ideas'],
