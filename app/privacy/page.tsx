@@ -2,7 +2,7 @@ import React from 'react'
 import { BackToHome } from '@/components/back-to-home'
 
 export const metadata = {
-  title: 'Privacy Policy | TastePalette',
+  title: 'Privacy Policy',
   description: 'TastePalette Privacy Policy regarding user data protection and cookie policies.',
 }
 

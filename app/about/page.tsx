@@ -2,7 +2,7 @@ import React from 'react'
 import { BackToHome } from '@/components/back-to-home'
 
 export const metadata = {
-  title: 'About Us | TastePalette',
+  title: 'About Us',
   description: 'Learn more about TastePalette and our passion for authentic, everyday recipes.',
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { BackToHome } from '@/components/back-to-home'
 
 export const metadata = {
-  title: 'Write for Us | TastePalette',
+  title: 'Write for Us',
   description: 'Contribute original recipes and food stories to TastePalette.',
 }
 

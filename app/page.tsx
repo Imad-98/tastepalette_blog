@@ -27,7 +27,11 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
       <main>
         {!isSanityConfigured && <SanitySetupNotice />}
         <CountryFilterBar />
-        {featured && <HeroRecipe recipe={featured} />}
+        {featured ? (
+          <HeroRecipe recipe={featured} />
+        ) : (
+          <h1 className="sr-only">TastePalette — delicious world recipes</h1>
+        )}
         <RecipeGrid recipes={recipes} />
       </main>
       <SiteFooter />

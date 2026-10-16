@@ -26,11 +26,7 @@ export const metadata: Metadata = {
     'Explore easy-to-follow, delicious recipes from around the world. Hand-picked dishes, cooking guides, and weekly culinary tips on TastePalette.',
   applicationName: 'TastePalette',   
   icons: {
-    icon: [
-      { url: '/icon.png', type: 'image/png' },
-      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    apple: '/apple-icon.png',
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
   },
   keywords: ['recipes', 'cooking tips', 'food blog', 'easy recipes', 'TastePalette', 'dinner ideas'],
   authors: [{ name: 'TastePalette Team' }],

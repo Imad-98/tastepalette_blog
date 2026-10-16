@@ -47,12 +47,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params
   const recipe = await getRecipeBySlug(slug)
-  if (!recipe) return { title: 'Recipe not found | TastePalette' }
+  if (!recipe) return { title: 'Recipe not found' }
 
   const imageUrl = recipe.image?.asset ? recipeImageUrl(recipe.image, 1200, 630) : undefined
 
   return {
-    title: `${recipe.title} | TastePalette`,
+    title: recipe.title,
     description: recipe.summary ?? undefined,
     openGraph: {
       title: `${recipe.title} | TastePalette`,
